@@ -1,25 +1,32 @@
 
-package app;
-import java.text.DecimalFormat;
+import java.text.*;
+
 import java.util.*;
 
 public class Main {
-    public static void main(String args[]) {
-       Random generator = new Random(0); 
-       Scanner sc = new Scanner(System.in);
-       int n = sc.nextInt();
-       double d;
+    public static void main(String [] args) {
+        Random generator = new Random(0); 
+        Scanner sc = new Scanner(System.in);    
 
-       DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
-       unusualSymbols.setDecimalSeparators('.');
-       DecimalFormat df = new DecimalFormat("0.00",unusualSymbols);
+        int n = sc.nextInt();//size of the population
+        int l = sc.nextInt();//chromosome length    
+        double d;   
 
-       for (int i = 0; i < args.length; i++) {
-           d = generator.nextDouble();
-           System.out.println(df.format(d));
-       }
+        //DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
+        //unusualSymbols.setDecimalSeparator('.');
+        //DecimalFormat df = new DecimalFormat("0.00",unusualSymbols);
 
-       sc.close();
+        
+        for (int i = 0; i < n; i++) {
+            StringBuilder s = new StringBuilder();
+            for(int j = 0; j < l; j++){
+                d = generator.nextDouble();       
+                s.append(Math.round(d));
+            }
+           System.out.println(s);
+        }
+
+        sc.close();
 
     }
 }
