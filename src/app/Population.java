@@ -13,11 +13,26 @@ public class Population {
         this.n=n;
         this.l=l;
         this.g=g;
+        initPopulation();
+    }
+
+    public Population(int n,int l, Random g,List<Double> fit){
+        p = new ArrayList<>(n);
+        
+        this.n=n;
+        this.l=l;
+        this.g=g;
+        initPopulation(fit);
     }
 
     public void initPopulation(){
         for (int i = 0; i < n; i++) 
             p.add(new Individual(l,g));
+    }
+
+    public void initPopulation(List<Double> fit){
+        for (int i = 0; i < n; i++) 
+            p.add(new Individual(l,g,fit.get(i)));
     }
 
     public void getPopulation(){

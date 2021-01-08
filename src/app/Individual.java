@@ -2,12 +2,25 @@ import java.util.Random;
 
 public class Individual {
     String adn;
+    double fitness;
 
     public Individual(int l, Random g){
         StringBuilder s = new StringBuilder();
         for (int j = 0; j < l; j++)
             s.append(Math.round(g.nextDouble()));
         adn=s.toString();
+    }
+
+    public Individual(String s){
+        adn=s;
+    }
+
+    public Individual(int l, Random g,double fitness){
+        StringBuilder s = new StringBuilder();
+        for (int j = 0; j < l; j++)
+            s.append(Math.round(g.nextDouble()));
+        adn=s.toString();
+        this.fitness=fitness;
     }
 
     public int countAdn(char c){

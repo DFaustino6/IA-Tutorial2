@@ -11,15 +11,14 @@ public class Main {
         int n = sc.nextInt();//size of the population
         int l = sc.nextInt();//chromosome length    
 
+        List<Double> fitness = new ArrayList<>();
+        
+        for (int i = 0; i < n; i++) 
+            fitness.add(sc.nextDouble());
         
 
-        /*DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
-        unusualSymbols.setDecimalSeparator('.');
-        DecimalFormat df = new DecimalFormat("0.00",unusualSymbols);*/
-
         Population p = new Population(n, l, generator);
-        p.initPopulation();
-        p.getPopulation();
+        
 
         sc.close();
     }
