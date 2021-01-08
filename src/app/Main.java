@@ -11,6 +11,7 @@ public class Main {
         //int n = sc.nextInt();//size of the population
         //int l = sc.nextInt();//chromosome length    
         
+        
 
         /*DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
         unusualSymbols.setDecimalSeparator('.');
@@ -18,8 +19,8 @@ public class Main {
 
         Individual ind = new Individual(sc.next());
         
-        System.out.println(ind.countAdn('1'));
-        
+        System.out.println(ind.binaryToDec());
+
         sc.close();
     }
 }

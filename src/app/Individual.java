@@ -13,4 +13,14 @@ public class Individual {
         return n;
     }
 
+    public int binaryToDec(){
+        int d = 0;
+        int pow = 0;
+        for (int i = adn.length()-1; i > -1; i--) {
+
+            d += Character.getNumericValue(adn.charAt(i)) * Math.pow(2, pow++);
+        }
+        return (int) Math.pow(d, 2);
+    }
+
 }
