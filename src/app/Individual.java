@@ -1,9 +1,13 @@
+import java.util.Random;
 
 public class Individual {
     String adn;
 
-    public Individual(String s){
-        adn=s;
+    public Individual(int l, Random g){
+        StringBuilder s = new StringBuilder();
+        for (int j = 0; j < l; j++)
+            s.append(Math.round(g.nextDouble()));
+        adn=s.toString();
     }
 
     public int countAdn(char c){
@@ -16,11 +20,9 @@ public class Individual {
     public int binaryToDec(){
         int d = 0;
         int pow = 0;
-        for (int i = adn.length()-1; i > -1; i--) {
-
+        for (int i = adn.length()-1; i > -1; i--)
             d += Character.getNumericValue(adn.charAt(i)) * Math.pow(2, pow++);
-        }
-        return (int) Math.pow(d, 2);
+        return d*d;
     }
 
 }

@@ -8,18 +8,18 @@ public class Main {
         Random generator = new Random(0); 
         Scanner sc = new Scanner(System.in);    
 
-        //int n = sc.nextInt();//size of the population
-        //int l = sc.nextInt();//chromosome length    
-        
+        int n = sc.nextInt();//size of the population
+        int l = sc.nextInt();//chromosome length    
+
         
 
         /*DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
         unusualSymbols.setDecimalSeparator('.');
         DecimalFormat df = new DecimalFormat("0.00",unusualSymbols);*/
 
-        Individual ind = new Individual(sc.next());
-        
-        System.out.println(ind.binaryToDec());
+        Population p = new Population(n, l, generator);
+        p.initPopulation();
+        p.getPopulation();
 
         sc.close();
     }
