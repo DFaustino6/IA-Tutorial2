@@ -3,6 +3,7 @@ import java.util.Random;
 public class Individual {
     String adn;
     double fitness;
+    private double probability;
 
     public Individual(int l, Random g){
         StringBuilder s = new StringBuilder();
@@ -23,6 +24,11 @@ public class Individual {
         this.fitness=fitness;
     }
 
+    public Individual(String s,double fitness){
+        adn=s;
+        this.fitness=fitness;
+    }
+
     public int countAdn(char c){
         int n = 0;
         for (int i = 0; i < adn.length(); i++) 
@@ -38,4 +44,20 @@ public class Individual {
         return d*d;
     }
 
+    public Individual fitest(Individual second){
+        if(fitness >= second.fitness) return this;
+        else return second;
+    }   
+
+    public void setProbability(double probability){
+        this.probability = probability;
+    }
+
+    public double getProbability(){
+        return probability;
+    }
+
+    public int adnCmp(Individual i){
+        return adn.compareTo(i.adn);
+    }
 }

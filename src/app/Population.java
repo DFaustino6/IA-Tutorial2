@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -25,6 +27,15 @@ public class Population {
         initPopulation(fit);
     }
 
+    public Population(Random g){
+        p = new ArrayList<>(n);
+        this.g=g;
+    }
+
+    public void addIndividual(Individual i){
+        p.add(i);
+    }
+
     public void initPopulation(){
         for (int i = 0; i < n; i++) 
             p.add(new Individual(l,g));
@@ -40,5 +51,67 @@ public class Population {
             System.out.println(individual.adn);
     }
 
+    public List<Individual> tournament(){
+        List<Individual>  fitest = new ArrayList<>();
 
+        for (int i = 0; i < n; i++)
+            fitest.add( p.get( randomIndividual( g.nextDouble())).fitest( p.get(randomIndividual( g.nextDouble() ) ) ) );
+
+        return fitest;
+    }
+
+    public Population roulette(){
+        Population p2 = new Population(g);
+        double fitSum = fitnessSum();
+
+        descendingFitness();
+        probabilities(fitSum);
+
+        int i = 0;
+
+        while(i < p.size()){
+            double r = g.nextDouble();
+            for (Individual individual : p) {
+                if(   r < individual.getProbability() ){
+                    p2.addIndividual(individual);
+                    break; 
+                }
+            } 
+            i++; 
+        }
+
+        p2.ascendingADN();
+        return p2;
+    }
+
+    private int randomIndividual(double u){     
+        return (int) Math.round( u * (n-1) );
+    }
+
+    private double fitnessSum(){
+        double sFit=0.0;
+
+        for (Individual individual : p) 
+            sFit+=individual.fitness; 
+
+        return sFit;
+    }
+
+    private void probabilities(double fitSum){
+        double previousProb = 0.0;
+
+        if(fitSum>0)
+            for (Individual individual : p){
+                individual.setProbability( previousProb + ( individual.fitness / fitSum ));
+                previousProb = individual.getProbability();
+            }
+    }
+
+    private void ascendingADN(){
+        p.sort((Individual o1,Individual o2)-> o1.adn.compareTo(o2.adn));
+    }
+
+    private void descendingFitness(){
+        p.sort((Individual o1,Individual o2)-> Double.compare(o2.fitness, o1.fitness));
+    }
 }
