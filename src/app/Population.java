@@ -6,7 +6,7 @@ import java.util.Random;
 
 
 public class Population {
-    List<Individual> p;
+    public List<Individual> p;
     int n,l;
     Random g;
 
@@ -82,6 +82,36 @@ public class Population {
 
         p2.ascendingADN();
         return p2;
+    }
+
+    public Population sus(){
+        Population keep = new Population(g);
+        List<Double> points = new ArrayList<>();
+
+        double fitSum = fitnessSum();
+        double d = fitSum/p.size();
+        double r = g.nextDouble() * d;
+
+        for (int i = 0; i < p.size(); i++)  
+            points.add( r + (i * d));
+
+        return susRWS(keep, points);
+    }
+
+    private Population susRWS(Population keep,List<Double> points){
+             
+        for (Double point : points) {
+            int i = 0;
+            double fitSumUntil = p.get(i).fitness;
+            
+            while (fitSumUntil < point) {                      
+                i++; 
+                fitSumUntil += p.get(i).fitness;            
+            }
+
+            keep.addIndividual(p.get(i));
+        }
+        return keep;
     }
 
     private int randomIndividual(double u){     

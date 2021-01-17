@@ -16,7 +16,7 @@ public class Main {
             p.addIndividual(new Individual(sc.next(),sc.nextDouble()));
 
 
-        Population p2 = p.roulette();
+        Population p2 = p.sus();
         
         p2.getPopulation();
         
