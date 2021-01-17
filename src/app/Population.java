@@ -4,8 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-
 public class Population {
+    public static final int HEAD = 0;
+    public static final int TAIL = 1;
+
     public List<Individual> p;
     int n,l;
     Random g;
@@ -55,7 +57,7 @@ public class Population {
         List<Individual>  fitest = new ArrayList<>();
 
         for (int i = 0; i < n; i++)
-            fitest.add( p.get( randomIndividual( g.nextDouble())).fitest( p.get(randomIndividual( g.nextDouble() ) ) ) );
+            fitest.add( p.get( randomIndividual( g.nextDouble(),0,n)).fitest( p.get(randomIndividual( g.nextDouble(),0,n) ) ) );
 
         return fitest;
     }
@@ -99,7 +101,7 @@ public class Population {
     }
 
     private Population susRWS(Population keep,List<Double> points){
-             
+
         for (Double point : points) {
             int i = 0;
             double fitSumUntil = p.get(i).fitness;
@@ -114,8 +116,56 @@ public class Population {
         return keep;
     }
 
-    private int randomIndividual(double u){     
-        return (int) Math.round( u * (n-1) );
+    public Population onePointCrossover(Individual parent,Individual parent2){
+        Population p2 = new Population(g);
+
+        int r = randomIndividual(g.nextDouble(),1,parent.adn.length()-1);
+       
+        String firstParent = parent.adn.substring(0,r+1);
+        String firstParent2 = parent.adn.substring(r+1,parent.adn.length());
+        String secondParent = parent2.adn.substring(0,r+1);
+        String secondParent2 = parent2.adn.substring(r+1,parent2.adn.length());
+
+        StringBuilder child1 = new StringBuilder();
+        child1.append(firstParent);
+        child1.append(secondParent2);
+        p2.addIndividual(new Individual(child1.toString()));
+
+        StringBuilder child2 = new StringBuilder();
+        child2.append(secondParent);
+        child2.append(firstParent2);
+        p2.addIndividual(new Individual(child2.toString()));
+
+        return p2;      
+    }
+
+    public Population uniformCrossover(Individual parent,Individual parent2) {
+        Population p2 = new Population(g); 
+        StringBuilder child = new StringBuilder();
+        StringBuilder child2 = new StringBuilder();
+
+        for (int j = 0; j < parent.adn.length(); j++) {
+            int r = (int) Math.round(g.nextDouble());
+        
+            if(r == HEAD){
+                child.append(parent2.adn.charAt(j));
+                child2.append(parent.adn.charAt(j));
+            }                
+            else if(r == TAIL){
+                child.append(parent.adn.charAt(j));  
+                child2.append(parent2.adn.charAt(j));
+            }        
+        }
+       
+        p2.addIndividual(new Individual(child.toString()));
+        p2.addIndividual(new Individual(child2.toString()));
+
+        return p2;
+    }
+
+
+    private int randomIndividual(double u,int a,int b){     
+        return (int) ( a + Math.round( u * ( b - a ) ) );
     }
 
     private double fitnessSum(){

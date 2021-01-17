@@ -10,13 +10,13 @@ public class Main {
 
         //int n = sc.nextInt();//size of the population
         //int l = sc.nextInt();//chromosome length    
-        Population p = new Population(generator);
+        Population pop = new Population(generator);
 
-        while(sc.hasNext())
-            p.addIndividual(new Individual(sc.next(),sc.nextDouble()));
+        pop.addIndividual(new Individual(sc.nextLine()));
+        pop.addIndividual(new Individual(sc.nextLine()));
 
 
-        Population p2 = p.sus();
+        Population p2 = pop.uniformCrossover(pop.p.get(0),pop.p.get(1));
         
         p2.getPopulation();
         
