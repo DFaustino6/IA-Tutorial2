@@ -60,4 +60,9 @@ public class Individual {
     public int adnCmp(Individual i){
         return adn.compareTo(i.adn);
     }
+
+    @Override
+    public String toString(){
+        return adn;
+    }
 }

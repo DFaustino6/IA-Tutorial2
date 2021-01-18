@@ -162,7 +162,23 @@ public class Population {
 
         return p2;
     }
+    
+    public Individual bitFlipMutation(Individual parent,double prob){
+        StringBuilder child = new StringBuilder();
+        
+        for (int i = 0; i < parent.adn.length(); i++) {
+            double r =  g.nextDouble();
+            char c = parent.adn.charAt(i);
 
+            if(r < prob){
+                if(c == '1')  child.append(0);
+                else if(c == '0') child.append(1);
+            }    
+            else child.append(c);
+        }
+
+        return new Individual(child.toString());
+    }
 
     private int randomIndividual(double u,int a,int b){     
         return (int) ( a + Math.round( u * ( b - a ) ) );
