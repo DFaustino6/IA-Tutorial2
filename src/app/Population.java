@@ -165,7 +165,7 @@ public class Population {
     
     public Individual bitFlipMutation(Individual parent,double prob){
         StringBuilder child = new StringBuilder();
-        
+
         for (int i = 0; i < parent.adn.length(); i++) {
             double r =  g.nextDouble();
             char c = parent.adn.charAt(i);
@@ -178,6 +178,24 @@ public class Population {
         }
 
         return new Individual(child.toString());
+    }
+
+    public List<Integer> randomPermutation(int size){
+        List<Integer> v = new ArrayList<>();
+        for (int i = 0; i < size; i++) 
+            v.add(i);
+        for (int i = 0; i < size-1; i++) {
+            int r = randomIndividual(g.nextDouble(), i, size-1);
+            
+        }
+
+        return v;
+    }
+
+    private void exchangePositions(List<Integer> v, int i, int r){
+        int tem=v.get(i);
+        v.get(i) = v.get(r);
+        v.get(r) = temp;
     }
 
     private int randomIndividual(double u,int a,int b){     
