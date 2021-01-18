@@ -34,6 +34,24 @@ public class Population {
         this.g=g;
     }
 
+    public Population(Population src){
+        p = cloneList(src.p);
+        g = src.g;
+    }
+
+    private List<Individual> cloneList(List<Individual> src){
+        List<Individual> temp = new ArrayList<>();
+        for (Individual individual : src) 
+            temp.add(individual);
+        
+        return temp;
+    }
+
+    @Override
+    public Object clone(){
+        return new Population(this);
+    }
+
     public void addIndividual(Individual i){
         p.add(i);
     }
@@ -185,7 +203,7 @@ public class Population {
 
         for (int i = 0; i < size; i++) 
             v.add(i);
-            
+
         for (int i = 0; i < size-1; i++) {
             int r = randomIndividual(g.nextDouble(), i, size-1);
             exchangePositions(v, i, r);
@@ -194,7 +212,38 @@ public class Population {
         return v;
     }
 
-    private void exchangePositions(List<Integer> v, int i, int r){
+    public Population tournamentSWR(int size){
+        Population p2 = new Population(g);
+        for (int i = 0; i < size; i++) {
+            Population temp =(Population) this.clone();
+
+            temp.populationPermutation();
+
+            for (int j = 0; j < p.size()/size; j++) {
+                List<Individual> subPop = temp.p.subList(j*size, (j+1)*size);
+                Individual fitest = subPop.get(0);
+                
+                for (int k = 1; k < subPop.size(); k++) 
+                    fitest = fitest.fitest(subPop.get(k));
+                
+                p2.addIndividual(fitest);
+            }
+        }
+        return p2;
+    }
+
+    private void populationPermutation(){
+        List<Integer> v = randomPermutation(p.size());
+        List<Individual> ind= new ArrayList<>();
+        
+        int j=0;
+        for (Integer i : v) 
+            ind.add(p.get(i));
+
+        p=ind;
+    }
+
+    private void exchangePositions(List<Integer> v, int i, int r) {
         int temp = v.get(i);
         v.set(i, v.get(r));
         v.set(r, temp);
@@ -230,4 +279,6 @@ public class Population {
     private void descendingFitness(){
         p.sort((Individual o1,Individual o2)-> Double.compare(o2.fitness, o1.fitness));
     }
+
+    
 }
