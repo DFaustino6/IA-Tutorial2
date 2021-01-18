@@ -12,11 +12,14 @@ public class Main {
         //int l = sc.nextInt();//chromosome length    
         Population pop = new Population(generator);
         
-        double prob = sc.nextDouble();
+        int n = sc.nextInt();
 
-        Individual ind = pop.bitFlipMutation(new Individual(sc.next()),prob);
+        List<Integer> v = pop.randomPermutation(n);
+
+        for (int i = 0; i < n; i++) {
+            System.out.println(v.get(i));
+        }
         
-        System.out.println(ind);
         
         sc.close();
     }

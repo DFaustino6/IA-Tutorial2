@@ -182,20 +182,22 @@ public class Population {
 
     public List<Integer> randomPermutation(int size){
         List<Integer> v = new ArrayList<>();
+
         for (int i = 0; i < size; i++) 
             v.add(i);
+            
         for (int i = 0; i < size-1; i++) {
             int r = randomIndividual(g.nextDouble(), i, size-1);
-            
+            exchangePositions(v, i, r);
         }
 
         return v;
     }
 
     private void exchangePositions(List<Integer> v, int i, int r){
-        int tem=v.get(i);
-        v.get(i) = v.get(r);
-        v.get(r) = temp;
+        int temp = v.get(i);
+        v.set(i, v.get(r));
+        v.set(r, temp);
     }
 
     private int randomIndividual(double u,int a,int b){     
