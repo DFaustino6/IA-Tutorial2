@@ -8,18 +8,22 @@ public class Main {
         Random generator = new Random(0); 
         Scanner sc = new Scanner(System.in);    
 
-        //int n = sc.nextInt();//size of the population
-        //int l = sc.nextInt();//chromosome length  
-        Population pop = new Population(generator);  
+        DecimalFormatSymbols unusualSymbols = new DecimalFormatSymbols();
+        unusualSymbols.setDecimalSeparator('.');
+        DecimalFormat df = new DecimalFormat("0.00", unusualSymbols);
 
-        int n = sc.nextInt();
+        int n = sc.nextInt();//size of the population
+        int l = sc.nextInt();//chromosome length  
+        Population pop = new Population(n,l,generator);  
 
-        while (sc.hasNext()) 
-            pop.addIndividual(new Individual(sc.next(),sc.nextDouble())); 
+        int s = sc.nextInt();
+
+        double mProb = sc.nextDouble();
+        double cProb = sc.nextDouble();
         
-        Population p2= pop.tournamentSWR(n);
-
-        p2.getPopulation();
+        Population p2= pop.GenOnemax(s,mProb,cProb);
+        System.out.println("0: " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
+        System.out.println("1: " + df.format(p2.maxFitness()) + " " + df.format(p2.averageFitness()) + " " + df.format(p2.minFitness()));
         
         
         sc.close();

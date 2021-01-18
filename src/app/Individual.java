@@ -10,10 +10,12 @@ public class Individual {
         for (int j = 0; j < l; j++)
             s.append(Math.round(g.nextDouble()));
         adn=s.toString();
+        fitness = countAdn('1');
     }
 
     public Individual(String s){
         adn=s;
+        fitness = countAdn('1');
     }
 
     public Individual(int l, Random g,double fitness){

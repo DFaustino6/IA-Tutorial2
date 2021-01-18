@@ -139,14 +139,15 @@ public class Population {
 
         int r = randomIndividual(g.nextDouble(),1,parent.adn.length()-1);
        
-        String firstParent = parent.adn.substring(0,r+1);
-        String firstParent2 = parent.adn.substring(r+1,parent.adn.length());
-        String secondParent = parent2.adn.substring(0,r+1);
-        String secondParent2 = parent2.adn.substring(r+1,parent2.adn.length());
+        String firstParent = parent.adn.substring(0,r);
+        String firstParent2 = parent.adn.substring(r,parent.adn.length());
+        String secondParent = parent2.adn.substring(0,r);
+        String secondParent2 = parent2.adn.substring(r,parent2.adn.length());
 
         StringBuilder child1 = new StringBuilder();
         child1.append(firstParent);
         child1.append(secondParent2);
+        
         p2.addIndividual(new Individual(child1.toString()));
 
         StringBuilder child2 = new StringBuilder();
@@ -230,6 +231,53 @@ public class Population {
             }
         }
         return p2;
+    }
+
+    public Population GenOnemax(int s, double mProb, double cProb){
+        Population p2 = new Population(g);
+
+        p2 = tournamentSWR(s);
+ 
+        Population temp = new Population(g);
+        for (int i = 0; i < n; i+=2){
+            double r =g.nextDouble();
+            
+            if( r < cProb){
+                temp=onePointCrossover(p2.p.get(i), p2.p.get(i+1));
+                p2.p.set(i, temp.p.get(0));
+                p2.p.set(i+1, temp.p.get(1));
+            }
+        }
+        
+        for (int i = 0; i < n; i++) 
+            p2.p.set(i,bitFlipMutation(p2.p.get(i), mProb));
+            
+        return p2;
+    }
+
+    public double maxFitness(){
+        Individual fitest= p.get(0);
+
+        for (int i = 1; i < p.size(); i++) 
+            if(fitest.fitness<p.get(i).fitness) fitest = p.get(i);
+     
+        return fitest.fitness;
+
+    }
+    
+    public double minFitness(){
+        Individual fitest= p.get(0);
+
+        for (int i = 1; i < p.size(); i++) 
+            if(fitest.fitness>p.get(i).fitness) fitest = p.get(i);
+     
+        return fitest.fitness;
+
+    }
+
+    public double averageFitness(){   
+        return fitnessSum()/p.size();
+
     }
 
     private void populationPermutation(){
