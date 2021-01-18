@@ -187,6 +187,7 @@ public class Population {
 
         for (int i = 0; i < parent.adn.length(); i++) {
             double r =  g.nextDouble();
+            System.out.println(r);
             char c = parent.adn.charAt(i);
 
             if(r < prob){
@@ -234,11 +235,11 @@ public class Population {
     }
 
     public Population GenOnemax(int s, double mProb, double cProb){
-        Population p2 = new Population(g);
+        Population p2;
 
         p2 = tournamentSWR(s);
- 
-        Population temp = new Population(g);
+        System.out.println("Torneio " + p2.p);
+        Population temp;
         for (int i = 0; i < n; i+=2){
             double r =g.nextDouble();
             
@@ -248,10 +249,10 @@ public class Population {
                 p2.p.set(i+1, temp.p.get(1));
             }
         }
-        
-        for (int i = 0; i < n; i++) 
+        System.out.println("Crossover " + p2.p);
+        for (int i = 0; i < p.size(); i++) 
             p2.p.set(i,bitFlipMutation(p2.p.get(i), mProb));
-            
+            System.out.println("Mutation " + p2.p);
         return p2;
     }
 

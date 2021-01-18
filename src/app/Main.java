@@ -21,9 +21,15 @@ public class Main {
         double mProb = sc.nextDouble();
         double cProb = sc.nextDouble();
         
-        Population p2= pop.GenOnemax(s,mProb,cProb);
-        System.out.println("0: " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
-        System.out.println("1: " + df.format(p2.maxFitness()) + " " + df.format(p2.averageFitness()) + " " + df.format(p2.minFitness()));
+        int itr = sc.nextInt();
+           
+        for (int j = 0; j < itr; j++) {
+            System.out.println(j+": " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
+            pop = pop.GenOnemax(s, mProb, cProb);
+        }
+        System.out.println(itr+": " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
+       
+       
         
         
         sc.close();
