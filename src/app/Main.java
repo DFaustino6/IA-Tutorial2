@@ -14,7 +14,7 @@ public class Main {
 
         int n = sc.nextInt();//size of the population
         int l = sc.nextInt();//chromosome length  
-        Population pop = new Population(n,l,generator);  
+          
 
         int s = sc.nextInt();
 
@@ -23,12 +23,9 @@ public class Main {
         
         int itr = sc.nextInt();
            
-        for (int j = 0; j < itr; j++) {
-            System.out.println(j+": " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
-            pop = pop.GenOnemax(s, mProb, cProb);
-        }
-        System.out.println(itr+": " + df.format(pop.maxFitness()) + " " + df.format(pop.averageFitness()) + " " + df.format(pop.minFitness()));
        
+        AG ag = new AG(n, l, generator, cProb, mProb, itr);
+        ag.GenerationOneMax();
        
         
         
